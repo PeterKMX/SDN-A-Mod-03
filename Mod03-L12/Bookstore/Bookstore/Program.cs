@@ -1,4 +1,4 @@
-﻿// Bookstore version: 3.1.5.21
+﻿// Bookstore version: 3.1.5.22
 
 using System.Reflection;
 
@@ -30,13 +30,15 @@ namespace Bookstore
         Console.WriteLine("- Uses Clean Architecture dependencies via dlls");
         Console.WriteLine("-----------------------------------------------------------");
 
-        // configure repositories for Book and JournalIssue   
+        // configure in-memory repositories for Book and JournalIssue   
         Repository<Book> bookRepository = new Repository<Book>();
-        Repository<JournalIssue> journalIssueRepository = new Repository<JournalIssue>();
+        Repository<JournalIssue> journalIssueRepository = 
+          new Repository<JournalIssue>();
 
         // configure domain model services 
         ItemService<Book> itemServiceBook = new ItemService<Book>(bookRepository);
-        ItemService<JournalIssue> itemServiceJournal = new ItemService<JournalIssue>(journalIssueRepository);
+        ItemService<JournalIssue> itemServiceJournal = 
+          new ItemService<JournalIssue>(journalIssueRepository);
 
         // configure app menu 
         MenuService mainMenuService = new MenuService();
@@ -48,6 +50,7 @@ namespace Bookstore
         IActionService actionService = new ActionService(itemServiceBook, itemServiceJournal);
         ActionDispatcher actionDispatcher = new ActionDispatcher(actionService);
 
+        IActionResult? actionResult = null; 
         // handle user requests
         while (true)
         {
@@ -56,7 +59,7 @@ namespace Bookstore
           {
             break;
           }
-          actionDispatcher.OnUserAction(userAction);
+          actionResult = actionDispatcher.OnUserAction(userAction);
         }
       }
       catch (Exception ex)

@@ -11,46 +11,46 @@ namespace Bookstore.Domain.Services
 {
   public class ItemService<T> : IItemService<T> where T : IBaseItem
   {
-    private IRepository<T> _repoGeneric;
+    private IRepository<T> _repository;
 
     public ItemService(IRepository<T> r)
     {
-      _repoGeneric = r;
+      _repository = r;
     }
 
     public void Add(T t)
     {
-      _repoGeneric.Add(t);
+      _repository.Add(t);
     }
 
     public T Read(int Id)
     {
-      return _repoGeneric.Read(Id);
+      return _repository.Read(Id);
     }
 
     public List<T> ReadAll()
     {
-      return _repoGeneric.ReadAll();
+      return _repository.ReadAll();
     }
 
     public void Update(int Id, T t)
     {
-      _repoGeneric.Update(Id, t);
+      _repository.Update(Id, t);
     }
 
     public void Delete(int Id)
     {
-      _repoGeneric.Delete(Id);
+      _repository.Delete(Id);
     }
 
     public List<int> GetIdList()
     {
-      return _repoGeneric.GetIdList();
+      return _repository.GetIdList();
     }
 
     public bool ItemListIsEmpty()
     {
-      return _repoGeneric.ItemListIsEmpty();
+      return _repository.ItemListIsEmpty();
     }
   }
 }
